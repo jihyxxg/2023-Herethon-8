@@ -24,8 +24,9 @@ class Hospital(models.Model):
         self.waiting+=1
 
 class Review(models.Model):
-    title=models.CharField(max_length=20, null=True,verbose_name="리뷰제목")
-    comment=models.TextField(verbose_name="리뷰내용")
-    writer=models.CharField(max_length=20,null=True,verbose_name="리뷰 작성자")
-    hospital=models.ForeignKey(Hospital, on_delete=models.CASCADE,verbose_name="리뷰 작성 대상 병원")
-    created_at = models.DateTimeField(auto_now_add=True,verbose_name="리뷰 생성일") 
+    point=models.IntegerField(verbose_name="평점",null=True)
+    title=models.CharField(max_length=20, null=True,verbose_name="제목")
+    comment=models.TextField(verbose_name="내용")
+    writer=models.CharField(max_length=20,null=True,verbose_name="작성자")
+    hospital=models.ForeignKey(Hospital, on_delete=models.CASCADE,verbose_name="리뷰 대상 병원")
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name="생성일자") 
