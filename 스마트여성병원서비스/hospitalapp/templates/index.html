@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="">마이페이지</a>
+    <div id="lat" style="display:none">
+        {% for hos in hospitals %}
+            {{hos.latitude}},
+        {% endfor %}
+    </div>
+    <div id="lng" style="display:none">
+        {% for hos in hospitals %}
+            {{hos.longtitude}},
+        {% endfor %}
+    </div>
+    <div id="name" style="display:none">
+        {% for hos in hospitals %}
+            {{hos.name}},
+        {% endfor %}
+    </div>
+    <div id="map" style="width:100%;height:350px;"></div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e59f4d4ca82146ab6bd68fbde0d4ec9f"></script>
+    <script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 10 // 지도의 확대 레벨 
+        }; 
+    
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";     
+    var imageSize = new kakao.maps.Size(24, 35); 
+    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+    if (navigator.geolocation) {
+        
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        navigator.geolocation.getCurrentPosition(function(position) {
+            
+            var lat = position.coords.latitude, // 위도
+                lon = position.coords.longitude; // 경도
+            
+            var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                message = '<div style="padding:5px;">현재 위치</div>'; // 인포윈도우에 표시될 내용입니다
+            
+            // 마커와 인포윈도우를 표시합니다
+            displayMarker(locPosition, message);
+                
+          });
+        
+    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+        
+        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+            message = 'geolocation을 사용할수 없어요..'
+            
+        displayMarker(locPosition, message);
+    }
+    
+    // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+    function displayMarker(locPosition, message) {
+    
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({  
+            map: map, 
+            position: locPosition,
+            image:markerImage
+        }); 
+        
+        var iwContent = message, // 인포윈도우에 표시할 내용
+            iwRemoveable = true;
+    
+        // 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content : iwContent,
+            removable : iwRemoveable
+        });
+        
+        // 인포윈도우를 마커위에 표시합니다 
+        infowindow.open(map, marker);
+        
+        // 지도 중심좌표를 접속위치로 변경합니다
+        map.setCenter(locPosition);  
+        var positions=[]
+    }   
+
+    
+    var latitudes = document.getElementById('lat').innerHTML.trim().split(',');
+    var longitudes = document.getElementById('lng').innerHTML.trim().split(',');
+    var names = document.getElementById('name').innerHTML.trim().split(',');
+
+    // 마커 생성 및 지도에 표시
+    for (var i = 0; i < latitudes.length; i++) {
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(parseFloat(latitudes[i]), parseFloat(longitudes[i])),
+            title: names[i]
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="padding:5px;">' + names[i] + '</div>'
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseover', makeListener(infowindow, marker));
+        kakao.maps.event.addListener(marker, 'mouseout', makeunListener(infowindow, marker));
+        
+    }
+
+    // 인포윈도우 클릭 이벤트 리스너 생성
+    function makeListener(infowindow, marker) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+    function makeunListener(infowindow, marker) {
+        return function() {
+            infowindow.close(map, marker);
+        };
+    }
+    </script>
+
+    <form method="get" action="{% url 'index' %}">
+        위치<select name="where">
+            <option value="0">없음</option>
+            <option value="서울">서울</option>
+            <option value="부산">부산</option>
+            <option value="대구">대구</option>
+            <option value="경기">경기</option>
+            
+        </select>
+        이름<input type="text" name="title">
+        병원평점<select name="grade">
+            <option value="0">선택안함</option>
+            <option value="1">1점이상</option>
+            <option value="2">2점이상</option>
+            <option value="3">3점이상</option>
+            <option value="4">4점이상</option>
+        </select>
+        여성전문의 진료<input name="woman" type="checkbox">
+        전체<input name="all" type="checkbox">
+        야간진료<input name="night_care" type="checkbox">
+        토요일 진료<input name="saturday_treatment" type="checkbox">
+        공휴일 진료<input name="holiday_treatement" type="checkbox">
+        일요일 진료<input name="sunday_care" type="checkbox">
+        
+        <button type="submit">검색</button>
+    </form>
+    <a href="{% url 'index' %}"><button>초기화</button></a><br>
+    {% for hospital in hospitals %}
+        <a href="{% url 'hospital-detail' hospital.id %}"><h3>{{ hospital.name }}</h3></a>
+        리뷰 : {{ hospital.reviews_count }}개, 평점 : 
+        {% if hospital.average_point is None %}
+            0
+        {% else %}
+            {{ hospital.average_point|floatformat:2 }}
+        {% endif %}<br>
+        {{ hospital.adress }}
+    {% empty %}
+        없음
+    {% endfor %}
+    
+
+</body>
+</html>
