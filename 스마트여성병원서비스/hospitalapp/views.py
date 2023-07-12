@@ -14,14 +14,15 @@ def index(request):
     holiday_treatment = request.GET.get('holiday_treatment')
     sunday_care = request.GET.get('sunday_care')
     woman = request.GET.get('woman')
-    all=request.GET.get('all')
-    if all:
+    all_care=request.GET.get('all_care')
+    print(where)
+    if all_care:
         hospitals = hospitals.filter(night_care=True,saturday_treatment=True,holiday_treatment=True,sunday_care=True,woman=True)
     
     #추가로 넣어야 함 
-    where_list = ['서울', '대구', '경기', '부산']
+    where_list = ['서울특별시','경기도','인천광역시','강원특별자치도','대전광역시','세종특별자치도','충청남도','충청북도','부산광역시','울산광역시','경상남도','경상북도','대구광역시','광주광역시','전라남도','전라북도','제주특별자치도']
     default_grade = 0
-
+    print(holiday_treatment)
     if night_care:
         hospitals = hospitals.filter(night_care=True)
     if saturday_treatment:
