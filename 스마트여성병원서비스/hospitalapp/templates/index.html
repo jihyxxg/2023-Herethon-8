@@ -130,11 +130,11 @@ var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
 
     <form method="get" action="{% url 'index' %}">
         위치<select name="where">
-            <option value="0">없음</option>
-            <option value="서울">서울</option>
+            <option value="0">전체</option>
+            <option value="서울특별시">서울</option>
             <option value="부산">부산</option>
             <option value="대구">대구</option>
-            <option value="경기">경기</option>
+            <option value="경기도">경기</option>
             
         </select>
         이름<input type="text" name="title">
@@ -145,12 +145,12 @@ var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
             <option value="3">3점이상</option>
             <option value="4">4점이상</option>
         </select>
-        여성전문의 진료<input name="woman" type="checkbox">
-        전체<input name="all" type="checkbox">
-        야간진료<input name="night_care" type="checkbox">
-        토요일 진료<input name="saturday_treatment" type="checkbox">
-        공휴일 진료<input name="holiday_treatement" type="checkbox">
-        일요일 진료<input name="sunday_care" type="checkbox">
+        여성전문의 진료<input name="woman" value="1" type="checkbox">
+        전체<input value="1" name="all_care" type="checkbox">
+        야간진료<input name="night_care" value="1" type="checkbox">
+        토요일 진료<input name="saturday_treatment" value="1" type="checkbox">
+        공휴일 진료<input name="holiday_treatment" value="1" type="checkbox">
+        일요일 진료<input name="sunday_care" value="1" type="checkbox">
         
         <button type="submit">검색</button>
     </form>
