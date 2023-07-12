@@ -48,6 +48,10 @@ def index(request):
 def hospital_detail(request, hospital_id):
     hospital=get_object_or_404(Hospital, id=hospital_id)
     reviews = Review.objects.filter(hospital=hospital).all()
+    return render(request, 'hospital/hospital_detail.html', {'hospital': hospital, 'reviews': reviews})
+
+def review_create(request, hospital_id):
+    hospital=get_object_or_404(Hospital, id=hospital_id)
     if request.method=="POST":
         Review.objects.create(
             title=request.POST.get('title'),
@@ -57,8 +61,8 @@ def hospital_detail(request, hospital_id):
             writer=request.user
         )
         hospital.reservated_users.remove(request.user)
-    return render(request, 'hospital/hospital_detail.html', {'hospital': hospital, 'reviews': reviews})
-
+        return redirect('hospital-detail',hospital.id)
+    return render(request, 'hospital/hospital_review.html',{'hospital':hospital})
 
 @login_required
 def reservation(request,hospital_id):

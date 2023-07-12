@@ -11,12 +11,11 @@
     <h3>{{ hospital.name }}</h3>
     <p>
         {{ hospital.adress }}<br>
-        위치 - {{hospital.where}}
     </p>
     <img src="{{hospital.image.url}}" width="200" height="200">
 <br>
-
-
+<a href="{% url 'index' %}">홈으로</a>
+    병원 리뷰
     {% for review in reviews %}
     <p>{{ review.point }}점 / {{ review.title }} / {{review.comment}} {{review.writer}}</p>
     {% empty %}
@@ -32,15 +31,8 @@
 
     <!--만약 예약한 사용자인 경우에만 리뷰 작성하기가 뜨도록-->
     {% if request.user in hospital.reservated_users.all %}
-        <a href="">리뷰 작성하기</a>
-        <form action="{% url 'hospital-detail' hospital_id=hospital.id %}" method="post">
-            {% csrf_token %}
-            평점<input type="number" name="point" min="0" max="5"><br>
-            제목<input type="text" name="title"><br>
-            내용<textarea name="content" name="content"></textarea><br>
-            <button type="submit">등록</button>
-        </form>
-        <!--리뷰는 마이페이지에서 작성하는건가? url연결,,-->
+        <a href="{% url 'review-create' hospital.id %}">리뷰 작성하기</a>
+        
     {% else %}
         <form action="{% url 'reservation' hospital_id=hospital.id %}" method="post">
             {% csrf_token %}
