@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Hospital, Review
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count,Avg
 # Create your views here.
 
@@ -49,6 +50,7 @@ def hospital_detail(request, hospital_id):
     reviews = Review.objects.filter(hospital=hospital).all()
     return render(request, 'hospital/hospital_detail.html', {'hospital': hospital, 'reviews': reviews})
 
+@login_required
 def reservation(request,hospital_id):
     hospital= get_object_or_404(Hospital, id=hospital_id)
     reviews = Review.objects.filter(hospital=hospital).all()
