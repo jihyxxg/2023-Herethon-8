@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Question
 from django.utils import timezone
 from django.http import HttpResponseRedirect, HttpResponse
@@ -6,6 +7,7 @@ from users.models import User
 from .forms import QuestionForm
 from hospitalapp.models import Hospital, Review
 
+@login_required
 def question_view(request, username):
     question_list = Question.objects.order_by('-create_date')
     user = get_object_or_404(User, username=username)
@@ -48,6 +50,7 @@ def question_create(request):
     
     return render(request, 'question_write.html', {'form' : form})
 
+@login_required
 def review_create(request, user):
     user = User.objects.get(username=user)
     reservated_hospitals = user.reservated_users.all()
