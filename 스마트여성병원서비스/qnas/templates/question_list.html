@@ -24,17 +24,15 @@
         <p>질문이 없습니다.</p>
     {% endif %}
 
-    {% for hospital in reservated_hospitals %}
-    {{ hospital.name }}<br>
-    {% for review in hospital.review_set.all %}
-        {{review.title}}
-        {{review.content}}
-        {{review.point}}<br>
-    {% empty %}
-        작성된 리뷰 없음<br>리뷰작성하러가기
-    {% endfor %}
+{% for review in reviews %}
+병원명 : {{review.hospital.name}}<br>
+{{review.title}}
+{{review.comment}}<br><br>
 {% empty %}
-    예약한 병원 없음
+작성한 리뷰 없음
 {% endfor %}
+
+
+
 </body>
 </html>

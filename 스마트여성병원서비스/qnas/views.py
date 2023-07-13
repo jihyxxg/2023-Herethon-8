@@ -6,13 +6,21 @@ from users.models import User
 from .forms import QuestionForm
 from hospitalapp.models import Hospital, Review
 
-def question_view(request,username):
+def question_view(request, username):
     question_list = Question.objects.order_by('-create_date')
-    context = {'question_list' : question_list}
-    user = get_object_or_404(User,username=username)  # 특정 User 객체를 가져옵니다.
+    user = get_object_or_404(User, username=username)
     reservated_hospitals = user.reservated_users.all()
-    context = {'question_list' : question_list, 'reservated_hospitals':reservated_hospitals}
+    
+    reviews=Review.objects.filter(writer=user)
+    print(reviews)
+    context = {
+        'question_list': question_list,
+        'reservated_hospitals': reservated_hospitals,
+        'user': user,
+        'reviews':reviews
+    }
     return render(request, 'question_list.html', context)
+
 
 def detail(request, question_id):
     question = Question.objects.get(id=question_id) #id에 해당하는 객체 get 
