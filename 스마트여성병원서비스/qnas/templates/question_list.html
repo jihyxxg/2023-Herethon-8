@@ -24,20 +24,24 @@
     {% else %}
         <p>질문이 없습니다.</p>
     {% endif %}
+    {% if not request.user.is_doctor %}
     <a href="{% url 'question_write' %}">글 작성하기</a><br><br>
+
 
 {% for review in reviews %}
 병원명 : {{review.hospital.name}}<br>
 {{review.comment}}<br><br>
-<a href="">상세보기</a>
+<a href="{% url 'mypage5' review.hospital.name review.id %}">상세보기</a>
 {% empty %}
 작성한 리뷰 없음
 {% endfor %}
+
 
 {% if reservated_hospitals.count == 0 %}
     <a onclick="javascript:alert('예약하신 병원이 없습니다')" href="">리뷰작성하기</a>
 {% else %}
 <a  href="{% url 'review-create-url' request.user %}">리뷰작성하기</a>
+{% endif %}
 {% endif %}
 </body>
 </html>

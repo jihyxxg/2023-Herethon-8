@@ -7,19 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ question.subject }}</h1>
-
-    <div>
-        {{ question.content }}
-    </div>
     
     <div>
         {% if doctor %}
             의사 : {{doctor}} 답변횟수 : {{doctor.total_posts}}
+            <br>의사설명 : {{doctor.comment}}
             {% if doctor.doctor_picture %}  <!--템플릿 안에서 조건문-->
-            <img src="{{doctor.doctor_picture.url}}"><!--의사프로필-->
+            <img src="{{doctor.doctor_picture.url}}"><!--의사프로필--><br>
+           
                 {% else %}
-                    <img  src="http://via.placeholder.com/600x600" alt="">
+                    <img  src="http://via.placeholder.com/100x100" alt="">
                 {% endif %}
             
         <br>답변내용 : {{answer.content}}
