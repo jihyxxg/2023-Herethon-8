@@ -13,7 +13,6 @@ def question_view(request, username):
     user = get_object_or_404(User, username=username)
     reservated_hospitals = user.reservated_users.all()
     reviews=Review.objects.filter(writer=user)
-    print(reviews)
     context = {
         'question_list': question_list,
         'reservated_hospitals': reservated_hospitals,
@@ -22,6 +21,14 @@ def question_view(request, username):
     }
     return render(request, 'question_list.html', context)
 
+def mypage5(request, hospital_name,review_id ):
+    # hospital_id=Hospital.objects.filter(name=hospital_name)
+    # hospital=Hospital.objects.get(id=hospital_id)
+    # user=User.objects.get(username=username)
+    review=Review.objects.get(id=review_id)
+
+    return render(request, 'mypage5.html',{'review':review})
+    #review=Review.objects.filter(hospital=hospital_name.id)
 
 def detail(request, question_id):
     question = Question.objects.get(id=question_id) #id에 해당하는 객체 get 
@@ -64,9 +71,5 @@ def review_create(request, user):
             writer=request.user
         )
         return redirect('mypage', request.user)
-    print(reservated_hospitals.count())
-    error=""
-    if reservated_hospitals.count()==0:
-        error="예약하신 병원이 없습니다"
 
-    return render(request, 'review_create.html', {'reservated_hospitals': reservated_hospitals,'error':error})
+    return render(request, 'review_create.html', {'reservated_hospitals': reservated_hospitals})
