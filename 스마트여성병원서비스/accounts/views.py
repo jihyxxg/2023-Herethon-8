@@ -14,7 +14,7 @@ def signup_view(request):
         form=SignUpForm(request.POST)
         if form.is_valid():  #ture면 회원가입처리
             instance=form.save()
-            return redirect('index')
+            return redirect('accounts:login')
 
         else:  #flase이면 돌려버림 
             return redirect('signup')
