@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login,logout
-from .forms import UserCreateForm, SignUpForm
+from .forms import UserCreateForm, SignUpForm,SignUpDoctorForm
 def signup_view(request):
     #get 요청 시 html 응답
     if request.method=='GET':
@@ -17,7 +17,24 @@ def signup_view(request):
             return redirect('accounts:login')
 
         else:  #flase이면 돌려버림 
-            return redirect('signup')
+            return redirect('accounts:signup')
+        
+def signup_docotr_view(request):
+    #get 요청 시 html 응답
+    if request.method=='GET':
+        form=SignUpDoctorForm
+        context={'form':form}
+        return render(request, 'accounts/signup_doctor.html',context)
+    
+    else:
+        #post요청 시 데이터 확인 후 회원 생성
+        form=SignUpDoctorForm(request.POST)
+        if form.is_valid():  #ture면 회원가입처리
+            instance=form.save()
+            return redirect('accounts:login')
+
+        else:  #flase이면 돌려버림 
+            return redirect('accounts:signupdoctor')
         
 def login_view(request):
     #get,post분리

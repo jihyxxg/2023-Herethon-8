@@ -12,20 +12,34 @@
     <div>
         {{ question.content }}
     </div>
-    <h5>{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
-    <div>
-        <ul>
-        {% for answer in question.answer_set.all %} 
-            <li> {{ answer.content }}</li>
-        {% endfor %}
-        </ul>
-    </div>
     
+    <div>
+        {% if doctor %}
+            의사 : {{doctor}} 답변횟수 : {{doctor.total_posts}}
+            {% if doctor.doctor_picture %}  <!--템플릿 안에서 조건문-->
+            <img src="{{doctor.doctor_picture.url}}"><!--의사프로필-->
+                {% else %}
+                    <img  src="http://via.placeholder.com/600x600" alt="">
+                {% endif %}
+            
+        <br>답변내용 : {{answer.content}}
+        {% else %}
+        답변없음
+        {% endif %}
+        
+
+
+    </div>
+    {% if request.user.is_doctor and not answer.writer%}
     <form action="{% url 'answer_create' question.id %}" method="post">
         {% csrf_token %}
         <textarea name="content" id="content" rows="15"></textarea>
         <input type="submit" value="답변 등록">
     </form>
+    {% elif request.user.is_doctor %}
+        이미 의사가 답변함 
+      
+    {% endif %}
     <a href="{% url 'mypage' request.user %}">돌아가기</a>
     <a href="{% url 'index' %}">홈으로</a>
     </body>

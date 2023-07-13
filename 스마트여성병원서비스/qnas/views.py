@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Question
+from .models import Question,Answer
 from django.utils import timezone
 from django.http import HttpResponseRedirect, HttpResponse
 from users.models import User
@@ -9,7 +9,10 @@ from hospitalapp.models import Hospital, Review
 
 @login_required
 def question_view(request, username):
-    question_list = Question.objects.filter(writer=username).order_by('-create_date')
+    if request.user.is_doctor:
+        question_list = Question.objects.order_by('-create_date')
+    else:
+        question_list = Question.objects.filter(writer=username).order_by('-create_date')
     user = get_object_or_404(User, username=username)
     reservated_hospitals = user.reservated_users.all()
     reviews=Review.objects.filter(writer=user)
@@ -32,13 +35,20 @@ def mypage5(request, hospital_name,review_id ):
 
 def detail(request, question_id):
     question = Question.objects.get(id=question_id) #id에 해당하는 객체 get 
-    context = {'question' : question} #위에서 get한 question 객체를 text화
+    if Answer.objects.filter(question=question):
+        answer=Answer.objects.filter(question=question)[0]
+        doctor=get_object_or_404(User, username=answer.writer)
+        print(type(doctor))
+        context = {'question' : question,'answer':answer,'doctor':doctor} #위에서 get한 question 객체를 text화
+    else:
+        context = {'question' : question,'answer':None}
     return render(request, 'question_detail.html', context)
 
 def answer_create(request, question_id):
+    request.user.increase_total_posts()
     question = get_object_or_404(Question, pk=question_id)
-    question.answer_set.create(content=request.POST.get('content'), create_date=timezone)
-    return redirect('qnas:detail', question_id=question_id)
+    Answer.objects.create(question=question, content=request.POST.get('content'), writer=request.user, create_date=timezone)
+    return redirect('question-detail', question_id=question_id)
 
 def question_create(request):
     form = QuestionForm(request.POST or None)
