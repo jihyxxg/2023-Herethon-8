@@ -16,8 +16,9 @@ def question_view(request, username):
     context = {
         'question_list': question_list,
         'reservated_hospitals': reservated_hospitals,
-        'user': user,
-        'reviews':reviews
+        #'user': user,
+        'reviews':reviews,
+        'username' : username,
     }
     return render(request, 'question_list.html', context)
 

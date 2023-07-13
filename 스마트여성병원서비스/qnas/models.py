@@ -20,4 +20,4 @@ class Answer(models.Model):
     #외래키 제약조건 무시하고 연쇄 삭제됨
     content = models.TextField(verbose_name='내용')
     create_date = models.DateTimeField()
-    writer = models.TextField(verbose_name='작성자')
+    writer = models.TextField(verbose_name= '작성자')
