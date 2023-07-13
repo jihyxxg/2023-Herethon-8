@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'review-create-url' request.user %}" method="post">
+        {% csrf_token %}
+        방문한 병원명
+        <select name="hospital">
+            {% for hospital in reservated_hospitals %}
+                <option value="{{ hospital.id }}">{{ hospital.name }}</option>
+            {% endfor %}
+        </select>
+        평점<input type="number" name="point" min="0" max="5"><br>
+        내용<textarea name="content" name="content"></textarea><br>
+        <button type="submit">등록</button>
+    </form>
+    
+</body>
+</html>
