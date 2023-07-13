@@ -14,20 +14,12 @@
             <input type='text' id="subject" placeholder="제목을 입력하세요." name="subject">
         </div>
         <div>
-            <label for="writer">작성자</label>
-            <input type="text" id="writer" placeholder="작성자를 입력하세요." name="writer">
-        </div>
-        <div>
             <label for="content">내용</label>
             <input type="text" id="content" placeholder="질문을 작성하세요." name="content">
         </div>
-        <div>
-            <label for="create_date">작성일</label>
-            <input type="date" id="create_date" name="create_date">
-        </div>
 
         <button type="submit" value="POST">질문 등록</button>
-        <a href="http://127.0.0.1:8000/question_list"></a>
+        <a href="{ url 'mypage' request.user %}"></a>
     </form>
 </body>
 </html>
