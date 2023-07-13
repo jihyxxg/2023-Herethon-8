@@ -2,12 +2,16 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Question
 from django.utils import timezone
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth.models import User
+from users.models import User
 from .forms import QuestionForm
+from hospitalapp.models import Hospital, Review
 
-def question_view(request):
+def question_view(request,username):
     question_list = Question.objects.order_by('-create_date')
     context = {'question_list' : question_list}
+    user = get_object_or_404(User,username=username)  # 특정 User 객체를 가져옵니다.
+    reservated_hospitals = user.reservated_users.all()
+    context = {'question_list' : question_list, 'reservated_hospitals':reservated_hospitals}
     return render(request, 'question_list.html', context)
 
 def detail(request, question_id):
