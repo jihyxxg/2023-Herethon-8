@@ -29,7 +29,7 @@
 {% for review in reviews %}
 병원명 : {{review.hospital.name}}<br>
 {{review.comment}}<br><br>
-<a href="{% url 'mypage5' review.hospital.name review.id %}">상세보기</a>
+<a href="">상세보기</a>
 {% empty %}
 작성한 리뷰 없음
 {% endfor %}
