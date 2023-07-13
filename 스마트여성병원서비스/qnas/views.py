@@ -40,7 +40,7 @@ def question_create(request):
             qst.subject = form.cleaned_data['subject']
             qst.create_date = form.cleaned_data['create_date']
             qst.save()
-            return redirect('http://127.0.0.1:8000/question_list')
+            return redirect('mypage',request.user)
         
         else:
             qst = QuestionForm()
