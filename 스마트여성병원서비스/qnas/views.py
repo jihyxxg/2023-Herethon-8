@@ -10,15 +10,13 @@ def question_view(request, username):
     question_list = Question.objects.order_by('-create_date')
     user = get_object_or_404(User, username=username)
     reservated_hospitals = user.reservated_users.all()
-    
     reviews=Review.objects.filter(writer=user)
     print(reviews)
     context = {
         'question_list': question_list,
         'reservated_hospitals': reservated_hospitals,
-        #'user': user,
+        'user': user,
         'reviews':reviews,
-        'username' : username,
     }
     return render(request, 'question_list.html', context)
 
