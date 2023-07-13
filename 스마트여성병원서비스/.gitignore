@@ -61,7 +61,11 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+<<<<<<< HEAD
 #migrations/
+=======
+migrations/
+>>>>>>> 912f147848e7254563d4dd39f51e90e7f767130d
 _media/
 
 # Flask stuff:

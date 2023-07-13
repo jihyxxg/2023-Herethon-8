@@ -7,7 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h3>질문제목 {{question.subject}}</h3>
+    <p>질문내용 {{question.content}}</p>
     <div>
         {% if doctor %}
             의사 : {{doctor}} 답변횟수 : {{doctor.total_posts}}
@@ -21,7 +22,7 @@
             
         <br>답변내용 : {{answer.content}}
         {% else %}
-        답변없음
+        의사 답변없음
         {% endif %}
         
 
