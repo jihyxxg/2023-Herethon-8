@@ -23,13 +23,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('hospitalapp.urls')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('question_write/question_list/<str:username>/', question_view, name='mypage'),
-    path('question_list/question/<int:question_id>/', views.detail, name='detail'),
+    path('mypage/<str:username>/', question_view, name='mypage'),
     path('question/<int:question_id>/', views.detail, name='question-detail'),
     path('answer/create/<int:question_id>/', views.answer_create, name='answer_create'),
     path('question_write/', views.question_create, name='question_write'),
-    path('question_list/', views.question_view, name = 'question_view'),
     path('hospital/review/create/<str:user>/', views.review_create, name='review-create-url'),
+    path('hospital/<str:hospital_name>/review/<int:review_id>/',views.mypage5, name='mypage5')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

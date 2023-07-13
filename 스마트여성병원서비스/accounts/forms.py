@@ -16,3 +16,8 @@ class SignUpForm(UserCreationForm):
     class Meta(UserBaseForm.Meta):
         model=get_user_model()
         fields=['username']
+
+class SignUpDoctorForm(UserCreationForm):
+    class Meta(UserBaseForm.Meta):
+        model=get_user_model()
+        fields=['username','doctor_picture','is_doctor','comment']
