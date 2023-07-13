@@ -29,11 +29,15 @@
 {% for review in reviews %}
 병원명 : {{review.hospital.name}}<br>
 {{review.comment}}<br><br>
+<a href="">상세보기</a>
 {% empty %}
 작성한 리뷰 없음
 {% endfor %}
 
-<a href="{% url 'review-create-url' request.user %}">리뷰작성하기</a>
-
+{% if reservated_hospitals.count == 0 %}
+    <a onclick="javascript:alert('예약하신 병원이 없습니다')" href="">리뷰작성하기</a>
+{% else %}
+<a  href="{% url 'review-create-url' request.user %}">리뷰작성하기</a>
+{% endif %}
 </body>
 </html>
