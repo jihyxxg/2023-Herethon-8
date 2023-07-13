@@ -17,7 +17,7 @@
 <a href="{% url 'index' %}">홈으로</a>
     병원 리뷰
     {% for review in reviews %}
-    <p>{{ review.point }}점 / {{ review.title }} / {{review.comment}} {{review.writer}}</p>
+    <p>{{ review.point }}점 /  {{review.comment}} {{review.writer}}</p>
     {% empty %}
     <Br>리뷰없음<br>
     {% endfor %}
@@ -30,15 +30,12 @@
     {% endif %}
 
     <!--만약 예약한 사용자인 경우에만 리뷰 작성하기가 뜨도록-->
-    {% if request.user in hospital.reservated_users.all %}
-        <a href="{% url 'review-create' hospital.id %}">리뷰 작성하기</a>
-        
-    {% else %}
+
         <form action="{% url 'reservation' hospital_id=hospital.id %}" method="post">
             {% csrf_token %}
             <button type="submit">예약하기</button>
         </form>
-    {% endif %}
+ 
 
         
 </body>
