@@ -13,7 +13,7 @@
         <ul>
         {% for question in question_list %}
         <li>
-            <a href='question/{{ question.id }}'>{{question.subject}}
+            <a href="{% url 'question-detail' question.id %}">{{question.subject}}
                 {{question.writer}}
                 {{question.create_date}}
                 {{question.content}}</a>
@@ -26,7 +26,6 @@
 
 {% for review in reviews %}
 병원명 : {{review.hospital.name}}<br>
-{{review.title}}
 {{review.comment}}<br><br>
 {% empty %}
 작성한 리뷰 없음

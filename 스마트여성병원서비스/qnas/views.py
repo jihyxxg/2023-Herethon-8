@@ -55,11 +55,11 @@ def review_create(request, user):
         hospital_id = request.POST.get('hospital')
         hospital = Hospital.objects.get(id=hospital_id)
         Review.objects.create(
-            title=request.POST.get('title'),
             comment=request.POST.get('content'),
             point=request.POST.get('point'),
             hospital=hospital,  # Hospital 인스턴스 할당
             writer=request.user
         )
         return redirect('hospital-detail', hospital_id)
+    
     return render(request, 'review_create.html', {'reservated_hospitals': reservated_hospitals})
