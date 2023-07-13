@@ -23,6 +23,7 @@
     {% else %}
         <p>질문이 없습니다.</p>
     {% endif %}
+    <a href="{% url 'question_write' %}">글 작성하기</a><br><br>
 
 {% for review in reviews %}
 병원명 : {{review.hospital.name}}<br>

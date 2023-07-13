@@ -37,9 +37,10 @@ def question_create(request):
     if request.method == 'POST':
         if form.is_valid():
             qst = Question()
-            qst.writer = form.cleaned_data['writer']
             qst.subject = form.cleaned_data['subject']
-            qst.create_date = form.cleaned_data['create_date']
+            qst.content=form.cleaned_data['content']
+            qst.writer=request.user
+        
             qst.save()
             return redirect('mypage',request.user)
         
