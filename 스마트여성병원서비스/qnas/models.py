@@ -19,10 +19,5 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, verbose_name='답변자', on_delete=models.CASCADE)
     #외래키 제약조건 무시하고 연쇄 삭제됨
     content = models.TextField(verbose_name='내용')
-<<<<<<< HEAD
-    create_date = models.DateTimeField()
-    writer = models.TextField(verbose_name= '작성자')
-=======
     create_date = models.DateTimeField(auto_now_add=True)
     writer = models.TextField(verbose_name='작성자')
->>>>>>> 97da16226f4e7e231a92e5087e87ea4cb0e9d1b1

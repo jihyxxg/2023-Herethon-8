@@ -60,6 +60,6 @@ def review_create(request, user):
             hospital=hospital,  # Hospital 인스턴스 할당
             writer=request.user
         )
-        return redirect('hospital-detail', hospital_id)
+        return redirect('mypage', request.user)
     
     return render(request, 'review_create.html', {'reservated_hospitals': reservated_hospitals})

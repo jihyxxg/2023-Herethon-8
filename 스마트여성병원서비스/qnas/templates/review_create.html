@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{% url 'index' %}">홈으로</a>
     <form action="{% url 'review-create-url' request.user %}" method="post">
         {% csrf_token %}
         방문한 병원명
