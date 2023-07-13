@@ -20,6 +20,11 @@
         내용<textarea name="content" name="content"></textarea><br>
         <button type="submit">등록</button>
     </form>
-    
+    <a href="{% url 'mypage' request.user %}">뒤로가기</a>
+    {% if error %}
+<script>
+    alert('{{error}}')
+</script>
+{% endif %}
 </body>
 </html>

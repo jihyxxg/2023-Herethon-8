@@ -64,5 +64,9 @@ def review_create(request, user):
             writer=request.user
         )
         return redirect('mypage', request.user)
-    
-    return render(request, 'review_create.html', {'reservated_hospitals': reservated_hospitals})
+    print(reservated_hospitals.count())
+    error=""
+    if reservated_hospitals.count()==0:
+        error="예약하신 병원이 없습니다"
+
+    return render(request, 'review_create.html', {'reservated_hospitals': reservated_hospitals,'error':error})
