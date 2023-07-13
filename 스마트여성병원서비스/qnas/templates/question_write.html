@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>질문 작성 페이지</title>
+</head>
+<body>
+    <h1>질문을 작성해주세요</h1>
+    <form action="" method="POST">{% csrf_token %}
+        <div>
+            <label for="subject">제목</label>
+            <input type='text' id="subject" placeholder="제목을 입력하세요." name="subject">
+        </div>
+        <div>
+            <label for="writer">작성자</label>
+            <input type="text" id="writer" placeholder="작성자를 입력하세요." name="writer">
+        </div>
+        <div>
+            <label for="content">내용</label>
+            <input type="text" id="content" placeholder="질문을 작성하세요." name="content">
+        </div>
+        <div>
+            <label for="create_date">작성일</label>
+            <input type="date" id="create_date" name="create_date">
+        </div>
+
+        <button type="submit" value="POST">질문 등록</button>
+        <a href="http://127.0.0.1:8000/question_list"></a>
+    </form>
+</body>
+</html>

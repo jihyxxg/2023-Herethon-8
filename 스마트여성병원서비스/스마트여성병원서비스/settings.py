@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'hospitalapp',
     'users',
     'accounts',
+    'qnas',
 ]
 
 MIDDLEWARE = [
