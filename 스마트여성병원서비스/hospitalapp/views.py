@@ -61,7 +61,6 @@ def review_create(request, hospital_id):
             hospital=hospital,
             writer=request.user
         )
-        hospital.reservated_users.remove(request.user)
         return redirect('hospital-detail',hospital.id)
     return render(request, 'hospital/hospital_review.html',{'hospital':hospital})
 

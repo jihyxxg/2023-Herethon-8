@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="">마이페이지</a>
+    <a href="{% url 'mypage' request.user %}">마이페이지</a>
     <div id="lat" style="display:none">
         {% for hos in hospitals %}
             {{hos.latitude}},

@@ -17,12 +17,22 @@
                 {{question.writer}}
                 {{question.create_date}}
                 {{question.content}}</a>
-            
             </li>  
         {% endfor %}
         </ul>
     {% else %}
         <p>질문이 없습니다.</p>
     {% endif %}
+
+{% for review in reviews %}
+병원명 : {{review.hospital.name}}<br>
+{{review.title}}
+{{review.comment}}<br><br>
+{% empty %}
+작성한 리뷰 없음
+{% endfor %}
+
+
+
 </body>
 </html>
